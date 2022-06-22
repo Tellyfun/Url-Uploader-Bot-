@@ -1,7 +1,7 @@
 
 
 import asyncio
-from pyrogram import types, errors
+from pyrogram import types, errors, enums
 from plugins.config import Config
 from plugins.database.database import db
 
@@ -32,7 +32,7 @@ async def OpenSettings(m: "types.Message"):
             text="**ʜᴇʀᴇ ʏᴏᴜ ᴄᴀɴ sᴇᴛᴜᴘ ʏᴏᴜʀ sᴇᴛᴛɪɴɢs**",
             reply_markup=types.InlineKeyboardMarkup(buttons_markup),
             disable_web_page_preview=True,
-            parse_mode="Markdown"
+            parse_mode=enums.ParseMode.MARKDOWN
         )
     except errors.MessageNotModified: pass
     except errors.FloodWait as e:
