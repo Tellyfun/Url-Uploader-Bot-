@@ -5,11 +5,13 @@ from pyrogram.types import (
     Message
 )
 from plugins.config import Config
-from pyrogram import Client
+from pyrogram import Client, enums
 from plugins.database.database import db
 from functions.display_progress import humanbytes
 from plugins.database.bcast import broadcast_handler
+
 f = filters.command("status") & filters.user(Config.OWNER_ID)
+
 s = filters.command("broadcast") & filters.user(Config.OWNER_ID) & filters.reply
 
 @app.on_message(f)
