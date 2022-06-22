@@ -15,7 +15,7 @@ import os
 import shutil
 import time
 from datetime import datetime
-
+from pyrogram import enums 
 from plugins.config import Config
 from plugins.script import Translation
 from plugins.thumbnail import *
@@ -211,6 +211,7 @@ async def youtube_dl_call_back(bot, update):
                     document=download_directory,
                     thumb=thumbnail,
                     caption=description,
+                    parse_mode=enums.ParseMode.HTML
                     reply_to_message_id=update.id,
                     progress=progress_for_pyrogram,
                     progress_args=(
@@ -230,6 +231,7 @@ async def youtube_dl_call_back(bot, update):
                     width=width,
                     height=height,
                     supports_streaming=True,
+                    parse_mode=enums.ParseMode.HTML,
                     thumb=thumb_image_path,
                     reply_to_message_id=update.id,
                     progress=progress_for_pyrogram,
@@ -246,7 +248,7 @@ async def youtube_dl_call_back(bot, update):
                     chat_id=update.message.chat.id,
                     audio=download_directory,
                     caption=description,
-                    parse_mode="HTML",
+                    parse_mode=enums.ParseMode.HTML,
                     duration=duration,
                     thumb=thumbnail,
                     reply_to_message_id=update.id,
