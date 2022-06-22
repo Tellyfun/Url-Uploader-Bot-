@@ -87,10 +87,9 @@ async def youtube_dl_call_back(bot, update):
                 o = entity.offset
                 l = entity.length
                 youtube_dl_url = youtube_dl_url[o:o + l]
-    await bot.edit_message_text(
-        text=Translation.DOWNLOAD_START,
-        chat_id=update.message.chat.id,
-        message_id=update.message.message_id
+    await update.message.edit_caption(
+        caption=Translation.DOWNLOAD_START,
+        parse_mode=enums.ParseMode.HTML
     )
     description = Translation.CUSTOM_CAPTION_UL_FILE
     if "fulltitle" in response_json:
@@ -124,7 +123,7 @@ async def youtube_dl_call_back(bot, update):
             "--max-filesize", str(Config.TG_MAX_FILE_SIZE),
             "--embed-subs",
             "-f", minus_f_format,
-            "--hls-prefer-ffmpeg", youtube_dl_url,
+            "--prefer-ffmpeg", youtube_dl_url,
             "-o", download_directory
         ]
     if Config.HTTP_PROXY != "":
@@ -155,9 +154,8 @@ async def youtube_dl_call_back(bot, update):
     ad_string_to_replace = "please report this issue on https://yt-dl.org/bug . Make sure you are using the latest version; see  https://yt-dl.org/update  on how to update. Be sure to call youtube-dl with the --verbose flag and include its complete output."
     if e_response and ad_string_to_replace in e_response:
         error_message = e_response.replace(ad_string_to_replace, "")
-        await bot.edit_message_text(
-            chat_id=update.message.chat.id,
-            message_id=update.message.message_id,
+        await update.message.edit_caption(
+            parse_mode=enums.ParseMode.HTML,
             text=error_message
         )
         return False
@@ -187,10 +185,10 @@ async def youtube_dl_call_back(bot, update):
             pass
 
         if file_size > Config.TG_MAX_FILE_SIZE:
-            await bot.edit_message_text(
-                chat_id=update.message.chat.id,
-                text=Translation.RCHD_TG_API_LIMIT.format(time_taken_for_download, humanbytes(file_size)),
-                message_id=update.message.message_id
+            await update.message.edit_caption(
+                
+                caption=Translation.RCHD_TG_API_LIMIT.format(time_taken_for_download, humanbytes(file_size)),
+                parse_mode=enums.ParseMode.HTML
             )
         else:
             is_w_f = False
@@ -203,10 +201,9 @@ async def youtube_dl_call_back(bot, update):
                 9
             )
             logger.info(images)'''
-            await bot.edit_message_text(
-                text=Translation.UPLOAD_START,
-                chat_id=update.message.chat.id,
-                message_id=update.message.message_id
+            await update.message.edit_caption(
+                caption=Translation.UPLOAD_START,
+                parse_mode=enums.ParseMode.HTML
             )
 
             # ref: message from @Sources_codes
@@ -290,10 +287,8 @@ async def youtube_dl_call_back(bot, update):
                 os.remove(thumbnail)
             except:
                 pass
-            await bot.edit_message_text(
-                text=Translation.AFTER_SUCCESSFUL_UPLOAD_MSG_WITH_TS.format(time_taken_for_download, time_taken_for_upload),
-                chat_id=update.message.chat.id,
-                message_id=update.message.message_id,
-                disable_web_page_preview=True
+            await update.message.edit_caption(
+                caption=Translation.AFTER_SUCCESSFUL_UPLOAD_MSG_WITH_TS.format(time_taken_for_download, time_taken_for_upload),
+                parse_mode=enums.ParseMode.HTML
             )
 
