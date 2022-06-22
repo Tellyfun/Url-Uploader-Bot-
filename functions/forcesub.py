@@ -1,6 +1,6 @@
 import asyncio
 from plugins.config import Config
-from pyrogram import Client
+from pyrogram import Client, enums
 from pyrogram.errors import FloodWait, UserNotParticipant
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 
@@ -16,9 +16,9 @@ async def handle_force_subscribe(bot, message):
             await bot.send_message(
                 chat_id=message.from_user.id,
                 text="Sorry Sir, You are Banned. Contact My [Support Group](https://t.me/tellybots_4u).",
-                parse_mode="markdown",
+                parse_mode=enums.ParseMode.MARKDOWN,
                 disable_web_page_preview=True,
-                reply_to_message_id=message.message_id,
+                reply_to_message_id=message.id,
             )
             return 400
     except UserNotParticipant:
@@ -32,17 +32,17 @@ async def handle_force_subscribe(bot, message):
                     ]
                 ]
             ),
-            parse_mode="markdown",
-            reply_to_message_id=message.message_id,
+            parse_mode=enums.ParseMode.MARKDOWN",
+            reply_to_message_id=message.id,
         )
         return 400
     except Exception:
         await bot.send_message(
             chat_id=message.from_user.id,
             text="Something Went Wrong. Contact My [Support Group](https://t.me/Tellybots_4u).",
-            parse_mode="markdown",
+            parse_mode=enums.ParseMode.MARKDOWN,
             disable_web_page_preview=True,
-            reply_to_message_id=message.message_id,
+            reply_to_message_id=message.id,
         )
         return 400
 
